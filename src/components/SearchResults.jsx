@@ -1,5 +1,6 @@
 import { useContext} from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
+import Flag from "react-world-flags";
 
 export default function SearchResults() {
     const { data, isLoading, error } = useContext(GlobalContext)
@@ -7,6 +8,26 @@ export default function SearchResults() {
     /* reinderizzo in pagina in caso di loading ed errori */
     if (isLoading) return <p>Caricamento...</p>;
     if (error) return <p>Errore: {error}</p>;
+
+    /* funzione per ottenere la bandiera */
+    const MovieFlag = ({movie}) => {
+        const language = movie?.original_language
+
+        // Se non c'è una lingua, mostro una bandiera di default
+        if (!language) {
+            return (
+                <>
+                    <span> {movie.original_language}</span>
+                </>
+            )
+        } else if (language === 'en') {
+            return <Flag code='gb' alt="flag" style={{ width: '25px', height: '15px' }} />
+        }
+
+        return(
+            <Flag code={language} alt="flag" style={{ width: '25px', height: '15px' }} />
+        )
+    }
 
     return (
         <>
@@ -23,7 +44,7 @@ export default function SearchResults() {
                                     {film.original_title}
                                 </li>
                                 <li>
-                                    {film.original_language}
+                                    <MovieFlag movie={film} />
                                 </li>
                                 <li>
                                     {film.vote_average}
