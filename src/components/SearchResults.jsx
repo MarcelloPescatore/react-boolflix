@@ -38,6 +38,9 @@ export default function SearchResults() {
                         <li key={item.id}>
                            <ul>
                                 <li>
+                                    <img src={`https://image.tmdb.org/t/p/w185/${item.poster_path}`} alt="" />
+                                </li>
+                                <li>
                                     {item.title || item.name}
                                 </li>
                                 <li>
