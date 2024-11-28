@@ -27,7 +27,7 @@ export default function SearchBar() {
             <input
                 type="text"
                 value={inputValue}
-                placeholder="🔍 Look for a movie..."
+                placeholder="🔍 search..."
                 onKeyUp={handleKeyEnter}
                 onChange={handleChange}
             />

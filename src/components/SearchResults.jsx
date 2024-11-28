@@ -34,20 +34,20 @@ export default function SearchResults() {
             {/* verifico che l'array contenga elementi altrimenti */}
             {data && data.length > 0 ? (
                 <ul>
-                    {data.map((film) => (
-                        <li key={film.id}>
+                    {data.map((item) => (
+                        <li key={item.id}>
                            <ul>
                                 <li>
-                                    {film.title}
+                                    {item.title || item.name}
                                 </li>
                                 <li>
-                                    {film.original_title}
+                                    {item.original_title || item.original_name}
                                 </li>
                                 <li>
-                                    <MovieFlag movie={film} />
+                                    <MovieFlag movie={item} />
                                 </li>
                                 <li>
-                                    {film.vote_average}
+                                    {item.vote_average}
                                 </li>
                             </ul> 
                             
