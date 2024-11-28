@@ -1,4 +1,4 @@
-import { useContext} from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
 import Flag from "react-world-flags";
 
@@ -10,23 +10,50 @@ export default function SearchResults() {
     if (error) return <p>Errore: {error}</p>;
 
     /* funzione per ottenere la bandiera */
-    const MovieFlag = ({movie}) => {
-        const language = movie?.original_language
+    const LanguageFlag = ({ data }) => {
+        const language = data?.original_language
 
-        // Se non c'è una lingua, mostro una bandiera di default
-        if (!language) {
-            return (
-                <>
-                    <span> {movie.original_language}</span>
-                </>
-            )
-        } else if (language === 'en') {
-            return <Flag code='gb' alt="flag" style={{ width: '25px', height: '15px' }} />
+        // Mappa manuale per alcuni codici di lingua che non sono codici di paese
+        const languageToCountryCode = {
+            en: "gb",  // Inglese → Regno Unito
+            it: "it",  // Italiano → Italia
+            es: "es",  // Spagnolo → Spagna
+            fr: "fr",  // Francese → Francia
+            de: "de",  // Tedesco → Germania
+            ja: "jp",  // Giapponese → Giappone
+            ko: "kr",  // Coreano → Corea del Sud
+            zh: "cn",  // Cinese → Cina
+            ar: "sa",  // Arabo → Arabia Saudita
+            he: "il",  // Ebraico → Israele
+            pt: "br",  // Portoghese → Brasile
+            fa: "ir",  // Farsi (Persiano) → Iran
+            und: "XX", // Non determinato
+            xx: "XX",  // Nessun contenuto linguistico
+            eo: "EO",  // Esperanto
+            ia: "IA"   // Interlingua
+        };
+
+        const flagCode = languageToCountryCode[language] || language
+
+        return (
+            <Flag code={flagCode} alt="flag" style={{ width: '15px', height: '10px' }} />
+        )
+    }
+
+    /* funzione per votazione in stelle */
+    const renderStars = (vote) => {
+        const fromeOneToFive = Math.ceil(vote * 0.5)
+        const stars = []
+
+        for (let i = 1; i <= 5; i++) {
+            if (i <= fromeOneToFive) {
+                stars.push(<span key={i}>★</span>); // Stella piena
+            } else {
+                stars.push(<span key={i}>☆</span>); // Stella vuota
+            }
         }
 
-        return(
-            <Flag code={language} alt="flag" style={{ width: '25px', height: '15px' }} />
-        )
+        return stars
     }
 
     return (
@@ -36,7 +63,7 @@ export default function SearchResults() {
                 <ul>
                     {data.map((item) => (
                         <li key={item.id}>
-                           <ul>
+                            <ul>
                                 <li>
                                     <img src={`https://image.tmdb.org/t/p/w185/${item.poster_path}`} alt="" />
                                 </li>
@@ -47,18 +74,18 @@ export default function SearchResults() {
                                     {item.original_title || item.original_name}
                                 </li>
                                 <li>
-                                    <MovieFlag movie={item} />
+                                    <LanguageFlag data={item} />
                                 </li>
                                 <li>
-                                    {item.vote_average}
+                                    {renderStars(item.vote_average)}
                                 </li>
-                            </ul> 
-                            
+                            </ul>
+
                         </li>
                     ))}
                 </ul>
-            ) : ( 
-               <p>Nessun risultato trovato.</p>
+            ) : (
+                <p>Nessun risultato trovato.</p>
             )}
         </>
     )
