@@ -36,7 +36,7 @@ export default function SearchResults() {
         const flagCode = languageToCountryCode[language] || language
 
         return (
-            <Flag code={flagCode} alt="flag" style={{ width: '15px', height: '10px' }} />
+            <Flag code={flagCode} alt="flag" style={{ width: '30px', height: '25px' }} />
         )
     }
 
@@ -47,9 +47,9 @@ export default function SearchResults() {
 
         for (let i = 1; i <= 5; i++) {
             if (i <= fromeOneToFive) {
-                stars.push(<span key={i}>★</span>); // Stella piena
+                stars.push(<i key={i} className="bi bi-star-fill text-warning me-2"></i>); 
             } else {
-                stars.push(<span key={i}>☆</span>); // Stella vuota
+                stars.push(<i key={i} className="bi bi-star text-warning me-2"></i>);
             }
         }
 
@@ -60,30 +60,40 @@ export default function SearchResults() {
         <>
             {/* verifico che l'array contenga elementi altrimenti */}
             {data && data.length > 0 ? (
-                <ul>
-                    {data.map((item) => (
-                        <li key={item.id}>
-                            <ul>
-                                <li>
-                                    <img src={`https://image.tmdb.org/t/p/w185/${item.poster_path}`} alt="" />
-                                </li>
-                                <li>
-                                    {item.title || item.name}
-                                </li>
-                                <li>
-                                    {item.original_title || item.original_name}
-                                </li>
-                                <li>
-                                    <LanguageFlag data={item} />
-                                </li>
-                                <li>
-                                    {renderStars(item.vote_average)}
-                                </li>
-                            </ul>
+                <div className="row g-4 justify-content-between">
 
-                        </li>
+                    {/* style={{ backgroundImage: item.poster_path ? `url(https://image.tmdb.org/t/p/w342/${item.poster_path})` : 'none' }} */}
+
+                    {/* map per ogni item genero una card */}
+                    {data.map((item) => (
+                        <div className="col-4" key={item.id} >
+                            {/* card */}
+                            <div className="poster_item"  >
+                                <img className="poster_img" src={`https://image.tmdb.org/t/p/w342/${item.poster_path}`} alt="poster_item" />
+
+
+                                <div className="info_item p-4">
+                                    <h2 className="title">
+                                        {item.title || item.name}
+                                    </h2>
+                                    <h4 className="original_title">
+                                        ( {item.original_title || item.original_name} )
+                                    </h4>
+                                    
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <span>
+                                            {renderStars(item.vote_average)}
+                                        </span>
+                                        <span>
+                                            <LanguageFlag data={item} />
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ))}
-                </ul>
+
+                </div>
             ) : (
                 <p>Nessun risultato trovato.</p>
             )}

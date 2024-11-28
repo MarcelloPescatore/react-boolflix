@@ -23,15 +23,16 @@ export default function SearchBar() {
 
 
     return (
-        <>
+        <div className="search_bar d-flex">
             <input
                 type="text"
                 value={inputValue}
-                placeholder="🔍 search..."
+                placeholder="Search..."
                 onKeyUp={handleKeyEnter}
                 onChange={handleChange}
+                className="form-control me-2"
             />
-            <button onClick={handleSearch}>Search</button>
-        </>
+            <div className="btn" onClick={handleSearch}>Search </div>
+        </div>
     )
 }
