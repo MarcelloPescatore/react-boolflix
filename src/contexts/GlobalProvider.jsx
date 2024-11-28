@@ -36,9 +36,10 @@ export const GlobalProvider = ({ children }) => {
                 return [];
             });
 
-         // Attendo entrambe le risposte e combina i risultati
-         Promise.all([fetchMovies, fetchTVShows]).then(([movies, tvShows]) => {
-            setData([...movies, ...tvShows]); // Combina i risultati dei film e delle serie
+         // Attendo entrambe le risposte e combino i risultati
+         Promise.all([fetchMovies, fetchTVShows])
+         .then(([resultsMovies, resultsTvShows]) => {
+            setData([...resultsMovies, ...resultsTvShows]); // Combina i risultati dei film e delle serie
             setIsLoading(false);
         });
 
