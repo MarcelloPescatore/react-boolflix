@@ -6,8 +6,8 @@ export default function SearchResults() {
     const { data, isLoading, error } = useContext(GlobalContext)
 
     /* reinderizzo in pagina in caso di loading ed errori */
-    if (isLoading) return <p>Caricamento...</p>;
-    if (error) return <p>Errore: {error}</p>;
+    if (isLoading) return <p className="text-light">Caricamento...</p>;
+    if (error) return <p className="text-light">Errore: {error}</p>;
 
     /* funzione per ottenere la bandiera */
     const LanguageFlag = ({ data }) => {
@@ -95,7 +95,7 @@ export default function SearchResults() {
 
                 </div>
             ) : (
-                <p>Nessun risultato trovato.</p>
+                <p className="text-light">Nessun risultato trovato.</p>
             )}
         </>
     )

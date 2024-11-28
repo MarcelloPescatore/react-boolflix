@@ -1,6 +1,9 @@
+import React from "react"
 import SearchBar from "./components/SearchBar"
 import SearchResults from "./components/SearchResults"
 import { GlobalProvider } from "./contexts/GlobalProvider"
+import MyLogo from "./assets/logo_header.png"
+
 
 
 
@@ -8,7 +11,7 @@ function App() {
   return (
     <GlobalProvider >
       <header className="d-flex align-items-center justify-content-between p-4">
-        <img src="https://fontmeme.com/permalink/241128/6dcdfdf662c09ca1dc0d3973751660c7.png" alt="logo_marflix" />
+        <img src={MyLogo} alt="logo_marflix" />
         <SearchBar />
       </header>
       <main className="flex-grow-1 d-flex">
