@@ -3,11 +3,11 @@ import { GlobalContext } from "../contexts/GlobalContext";
 import { useContext } from "react";
 
 export default function SearchBar() {
-    const { setQuery } = useContext(GlobalContext)
+    const { fetchData } = useContext(GlobalContext)
     const [inputValue, setInputValue] = useState('');
 
     const handleSearch = () => {
-        setQuery(inputValue.toLowerCase())
+       fetchData(inputValue.toLowerCase())
         setInputValue('')
     }
 

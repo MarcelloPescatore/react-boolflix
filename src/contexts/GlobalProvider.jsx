@@ -5,6 +5,7 @@ export const GlobalProvider = ({ children }) => {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [hasReserched, setHasReserched] = useState(false)
 
     const api_key = import.meta.env.VITE_API_KEY
 
@@ -16,6 +17,7 @@ export const GlobalProvider = ({ children }) => {
 
         setIsLoading(true)
         setError(null)
+        setHasReserched(true)
 
         // chiamata per film
         const fetchMovies = fetch(`https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}`)
