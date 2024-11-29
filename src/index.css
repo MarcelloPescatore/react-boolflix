@@ -18,6 +18,11 @@ header {
     background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9023984593837535) 15%, rgba(0, 0, 0, 0.8211659663865546) 28%, rgba(0, 0, 0, 0.03125) 100%);
     z-index: 1000;
 
+    .form-control:focus {
+        border-color: var(--cl-netflix) !important;
+        box-shadow: 0 0 0 .25rem rgba(223, 5, 5, 0.25) !important;
+    }
+
 }
 
 #root {
