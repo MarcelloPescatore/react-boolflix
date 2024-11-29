@@ -7,7 +7,7 @@ export const GlobalProvider = ({ children }) => {
     const [query, setQuery] = useState('');
     const [error, setError] = useState(null)
     const [hasReserched, setHasReserched] = useState(false)
-    const [dataCredits, setDataCredits] = useState([])
+    const [dataCredits, setDataCredits] = useState({})
 
     const api_key = import.meta.env.VITE_API_KEY
 
@@ -54,24 +54,37 @@ export const GlobalProvider = ({ children }) => {
         fetchData(query)
     }, [query])
 
-    //effettuo una chiamata fetch all'invio della query tramite input
+
+
+
+    //effettuo una chiamata fetch all'invio dell`id tramite click sul button
     const fetchDataCredits = (id) => {
 
         //se è false termino la chiamata
         if (!id) return;
 
+        // Verifica se i crediti sono già stati caricati
+        if (dataCredits[id]) return;
+
+        const movie_id = id
+
         // chiamata per film
-        fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${api_key}&language=en-US`)
+        fetch(`https://api.themoviedb.org/3/movie/${movie_id}/credits?api_key=${api_key}&language=en-US`)
             .then((response) => response.json())
-            .then((data) => (setDataCredits(data.cast) || []))
+            .then((data) => {
+                setDataCredits((prevCredits) => ({
+                    ...prevCredits,
+                    [id]: data.cast || [] 
+                }));
+            })
             .catch((err) => {
                 console.log(err.message);
                 return []
-        })
+            })
 
     }
 
-    
+
     return (
 
         <GlobalContext.Provider value={{ data, setQuery, isLoading, error, hasReserched, fetchDataCredits, dataCredits }}>

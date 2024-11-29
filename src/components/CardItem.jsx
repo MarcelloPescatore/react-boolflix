@@ -50,9 +50,7 @@ export default function CardItem() {
     }
 
     const handleCredits = (id) => {
-        if (!dataCredits || !dataCredits.cast) {
-            fetchDataCredits(id)
-        }
+        fetchDataCredits(id);
     }
 
     return (
@@ -64,39 +62,45 @@ export default function CardItem() {
                     <div className="poster_item"  >
                         <img className="poster_img" src={`https://image.tmdb.org/t/p/w342/${item.poster_path}`} alt="poster_item" />
 
+                        {/* info movie or tv series */}
                         <div className="info_item p-4">
-                            <h2 className="title">
-                                {item.title || item.name}
-                            </h2>
-                            <h4 className="original_title">
-                                ( {item.original_title || item.original_name} )
-                            </h4>
+                            <div className="info_start">
+                                <h2 className="title">
+                                    {item.title || item.name}
+                                </h2>
+                                < button className="btn" onClick={() => handleCredits(item.id)}> Credits </button>
 
-                            {dataCredits && dataCredits.cast && dataCredits.cast.length > 0 && (
-                                dataCredits.cast.filter((caster) => caster.order < 6).map((caster) => (
-                                    <>
-                                        <p>{caster.name}</p>
-                                        <p>{caster.character}</p>
-                                    </>
+                                <div className="mt-4">
+                                    {/* credits section */}
+                                    {dataCredits[item.id] && dataCredits[item.id].length > 0 && (
+                                        dataCredits[item.id]
+                                            .filter((caster) => caster.order < 6)
+                                            .map((caster) => (
+                                                <h6 className="pb-1" key={caster.id}> <span>{caster.name} </span>  ({caster.character})</h6>
+                                            ))
+                                    )}
+                                </div>
+                            </div>
 
-                                ))
-                            )}
+                            <div className="info_end">
 
-                            <button onClick={handleCredits(item.id)}> Credits </button>
+                                {/* vote and flag */}
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <span>
+                                        {renderStars(item.vote_average)}
+                                    </span>
+                                    <span>
+                                        <LanguageFlag data={item} />
+                                    </span>
+                                </div>
 
-                            <div className="d-flex justify-content-between align-items-center">
-                                <span>
-                                    {renderStars(item.vote_average)}
-                                </span>
-                                <span>
-                                    <LanguageFlag data={item} />
-                                </span>
                             </div>
                         </div>
 
                     </div>
-                </div>
-            ))}
+                </div >
+            ))
+            }
         </>
     )
 }
