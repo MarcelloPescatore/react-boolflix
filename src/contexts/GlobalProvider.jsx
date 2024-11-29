@@ -1,11 +1,12 @@
 import { GlobalContext } from "./GlobalContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const GlobalProvider = ({ children }) => {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
     const [hasReserched, setHasReserched] = useState(false)
+    const [dataCredits, setDataCredits] = useState([])
 
     const api_key = import.meta.env.VITE_API_KEY
 
@@ -48,9 +49,41 @@ export const GlobalProvider = ({ children }) => {
 
     }
 
+    //effettuo una chiamata fetch all'invio della query tramite input
+    const fetchDataCredits = (id) => {
+
+        //se è false termino la chiamata
+        if (!id) return;
+
+        // chiamata per film
+        const fetchCreditsMovies = fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${api_key}}&language=en-US`)
+            .then((response) => response.json())
+            .then((data) => data.results || [])
+            .catch((err) => {
+                console.log(err.message);
+                return []
+            })
+
+        // chiamata serie tv    
+        const fetchCreditsTVShows = fetch(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${api_key}}&language=en-US`)
+            .then((response) => response.json())
+            .then((data) => data.results || [])
+            .catch((err) => {
+                console.log(err.message);
+                return [];
+            });
+
+         // Attendo entrambe le risposte e combino i risultati
+         Promise.all([fetchCreditsMovies, fetchCreditsTVShows])
+         .then(([resultsMovies, resultsTvShows]) => {
+            setDataCredits([...resultsMovies, ...resultsTvShows]); // Combina i risultati dei film e delle serie
+        });
+
+    }
+
     return (
 
-        <GlobalContext.Provider value={{ data, fetchData, isLoading, error, hasReserched }}>
+        <GlobalContext.Provider value={{ data, fetchData, isLoading, error, hasReserched, fetchDataCredits, dataCredits }}>
             {children}
         </GlobalContext.Provider>
     )

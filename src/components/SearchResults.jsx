@@ -20,7 +20,7 @@ export default function SearchResults() {
 
                 </div>
             ) : (
-               hasReserched && <p className="text-light">Nessun risultato trovato.</p>
+               hasReserched && <p className="text-light">No results found.</p>
             )}
         </>
     )

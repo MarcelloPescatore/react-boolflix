@@ -4,7 +4,7 @@ import Flag from "react-world-flags";
 
 export default function CardItem() {
 
-    const {data} = useContext(GlobalContext)
+    const { data, dataCredits, fetchDataCredits } = useContext(GlobalContext)
 
     /* funzione per ottenere la bandiera */
     const LanguageFlag = ({ data }) => {
@@ -40,7 +40,7 @@ export default function CardItem() {
 
         for (let i = 1; i <= 5; i++) {
             if (i <= fromeOneToFive) {
-                stars.push(<i key={i} className="bi bi-star-fill text-warning me-2"></i>); 
+                stars.push(<i key={i} className="bi bi-star-fill text-warning me-2"></i>);
             } else {
                 stars.push(<i key={i} className="bi bi-star text-warning me-2"></i>);
             }
@@ -48,6 +48,10 @@ export default function CardItem() {
 
         return stars
     }
+
+    /* const handleCredits = (id) => {
+        fetchDataCredits(id)
+    } */
 
     return (
         <>
@@ -65,6 +69,18 @@ export default function CardItem() {
                             <h4 className="original_title">
                                 ( {item.original_title || item.original_name} )
                             </h4>
+
+                            {/* {dataCredits && dataCredits.cast && dataCredits.cast.length > 0 && (
+                                dataCredits.cast.filter((caster) => caster.order < 6).map((caster) => (
+                                    <>
+                                        <p>{caster.name}</p>
+                                        <p>{caster.character}</p>
+                                    </>
+
+                                ))
+                            )}
+
+                            <button onClick={handleCredits(item.id)}> Credits </button> */}
 
                             <div className="d-flex justify-content-between align-items-center">
                                 <span>
