@@ -3,14 +3,13 @@ import { useEffect, useState } from "react";
 
 export const GlobalProvider = ({ children }) => {
     const [data, setData] = useState([])
-    const [query, setQuery] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
 
     const api_key = import.meta.env.VITE_API_KEY
 
-    //imposto un useEffet che effettua il codice ogni volta che cambia `query`
-    useEffect(() => {
+    //effettuo una chiamata fetch all'invio della query tramite input
+    const fetchData = (query) => {
 
         //se è false termino la chiamata
         if (!query) return;
@@ -45,12 +44,12 @@ export const GlobalProvider = ({ children }) => {
             setIsLoading(false);
         });
 
-    }, [query])
+    }
 
 
     return (
 
-        <GlobalContext.Provider value={{ data, setQuery, isLoading, error }}>
+        <GlobalContext.Provider value={{ data, fetchData, isLoading, error }}>
             {children}
         </GlobalContext.Provider>
     )
