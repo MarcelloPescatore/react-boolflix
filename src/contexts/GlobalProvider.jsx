@@ -48,10 +48,9 @@ export const GlobalProvider = ({ children }) => {
 
     }
 
-
     return (
 
-        <GlobalContext.Provider value={{ data, fetchData, isLoading, error }}>
+        <GlobalContext.Provider value={{ data, fetchData, isLoading, error, hasReserched }}>
             {children}
         </GlobalContext.Provider>
     )
