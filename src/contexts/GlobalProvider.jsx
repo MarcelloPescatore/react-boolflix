@@ -7,6 +7,8 @@ export const GlobalProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
 
+    const api_key = import.meta.env.VITE_API_KEY
+
     //imposto un useEffet che effettua il codice ogni volta che cambia `query`
     useEffect(() => {
 
@@ -17,7 +19,7 @@ export const GlobalProvider = ({ children }) => {
         setError(null)
 
         // chiamata per film
-        const fetchMovies = fetch(`https://api.themoviedb.org/3/search/movie?api_key=4f64316b70d9e5f269dcd02b9bd9b6cf&query=${query}`)
+        const fetchMovies = fetch(`https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}`)
             .then((response) => response.json())
             .then((data) => data.results || [])
             .catch((err) => {
@@ -27,7 +29,7 @@ export const GlobalProvider = ({ children }) => {
             })
 
         // chiamata serie tv    
-        const fetchTVShows = fetch(`https://api.themoviedb.org/3/search/tv?api_key=4f64316b70d9e5f269dcd02b9bd9b6cf&query=${query}`)
+        const fetchTVShows = fetch(`https://api.themoviedb.org/3/search/tv?api_key=${api_key}&query=${query}`)
             .then((response) => response.json())
             .then((data) => data.results || [])
             .catch((err) => {

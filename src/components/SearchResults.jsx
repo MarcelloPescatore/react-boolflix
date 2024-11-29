@@ -71,7 +71,6 @@ export default function SearchResults() {
                             <div className="poster_item"  >
                                 <img className="poster_img" src={`https://image.tmdb.org/t/p/w342/${item.poster_path}`} alt="poster_item" />
 
-
                                 <div className="info_item p-4">
                                     <h2 className="title">
                                         {item.title || item.name}
@@ -89,6 +88,7 @@ export default function SearchResults() {
                                         </span>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     ))}
