@@ -49,9 +49,11 @@ export default function CardItem() {
         return stars
     }
 
-    /* const handleCredits = (id) => {
-        fetchDataCredits(id)
-    } */
+    const handleCredits = (id) => {
+        if (!dataCredits || !dataCredits.cast) {
+            fetchDataCredits(id)
+        }
+    }
 
     return (
         <>
@@ -70,7 +72,7 @@ export default function CardItem() {
                                 ( {item.original_title || item.original_name} )
                             </h4>
 
-                            {/* {dataCredits && dataCredits.cast && dataCredits.cast.length > 0 && (
+                            {dataCredits && dataCredits.cast && dataCredits.cast.length > 0 && (
                                 dataCredits.cast.filter((caster) => caster.order < 6).map((caster) => (
                                     <>
                                         <p>{caster.name}</p>
@@ -80,7 +82,7 @@ export default function CardItem() {
                                 ))
                             )}
 
-                            <button onClick={handleCredits(item.id)}> Credits </button> */}
+                            <button onClick={handleCredits(item.id)}> Credits </button>
 
                             <div className="d-flex justify-content-between align-items-center">
                                 <span>

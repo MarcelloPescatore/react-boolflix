@@ -1,9 +1,10 @@
 import { GlobalContext } from "./GlobalContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const GlobalProvider = ({ children }) => {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [query, setQuery] = useState('');
     const [error, setError] = useState(null)
     const [hasReserched, setHasReserched] = useState(false)
     const [dataCredits, setDataCredits] = useState([])
@@ -40,14 +41,18 @@ export const GlobalProvider = ({ children }) => {
                 return [];
             });
 
-         // Attendo entrambe le risposte e combino i risultati
-         Promise.all([fetchMovies, fetchTVShows])
-         .then(([resultsMovies, resultsTvShows]) => {
-            setData([...resultsMovies, ...resultsTvShows]); // Combina i risultati dei film e delle serie
-            setIsLoading(false);
-        });
+        // Attendo entrambe le risposte e combino i risultati
+        Promise.all([fetchMovies, fetchTVShows])
+            .then(([resultsMovies, resultsTvShows]) => {
+                setData([...resultsMovies, ...resultsTvShows]); // Combina i risultati dei film e delle serie
+                setIsLoading(false);
+            });
 
     }
+
+    useEffect(() => {
+        fetchData(query)
+    }, [query])
 
     //effettuo una chiamata fetch all'invio della query tramite input
     const fetchDataCredits = (id) => {
@@ -56,34 +61,20 @@ export const GlobalProvider = ({ children }) => {
         if (!id) return;
 
         // chiamata per film
-        const fetchCreditsMovies = fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${api_key}}&language=en-US`)
+        fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${api_key}&language=en-US`)
             .then((response) => response.json())
-            .then((data) => data.results || [])
+            .then((data) => (setDataCredits(data.cast) || []))
             .catch((err) => {
                 console.log(err.message);
                 return []
-            })
-
-        // chiamata serie tv    
-        const fetchCreditsTVShows = fetch(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${api_key}}&language=en-US`)
-            .then((response) => response.json())
-            .then((data) => data.results || [])
-            .catch((err) => {
-                console.log(err.message);
-                return [];
-            });
-
-         // Attendo entrambe le risposte e combino i risultati
-         Promise.all([fetchCreditsMovies, fetchCreditsTVShows])
-         .then(([resultsMovies, resultsTvShows]) => {
-            setDataCredits([...resultsMovies, ...resultsTvShows]); // Combina i risultati dei film e delle serie
-        });
+        })
 
     }
 
+    
     return (
 
-        <GlobalContext.Provider value={{ data, fetchData, isLoading, error, hasReserched, fetchDataCredits, dataCredits }}>
+        <GlobalContext.Provider value={{ data, setQuery, isLoading, error, hasReserched, fetchDataCredits, dataCredits }}>
             {children}
         </GlobalContext.Provider>
     )

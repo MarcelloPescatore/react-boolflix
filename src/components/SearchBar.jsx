@@ -1,19 +1,19 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
 import { useContext } from "react";
 
 export default function SearchBar() {
-    const { fetchData } = useContext(GlobalContext)
+    const { setQuery } = useContext(GlobalContext)
     const [inputValue, setInputValue] = useState('');
 
     const handleSearch = () => {
-       fetchData(inputValue.toLowerCase())
+        setQuery(inputValue.toLowerCase())
         setInputValue('')
     }
 
     const handleKeyEnter = (e) => {
         if (e.key === 'Enter') {
-         handleSearch()   
+            handleSearch()
         }
     }
 
