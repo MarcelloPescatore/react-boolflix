@@ -1,10 +1,11 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { GlobalContext } from "../contexts/GlobalContext"
 import Flag from "react-world-flags";
 
 export default function CardItem() {
 
     const { data, dataCredits, fetchDataCredits } = useContext(GlobalContext)
+    const [visibleCredits, setVisibleCredits] = useState({});
 
     /* funzione per ottenere la bandiera */
     const LanguageFlag = ({ data }) => {
@@ -12,18 +13,18 @@ export default function CardItem() {
 
         // Mappa manuale per alcuni codici di lingua che non sono codici di paese
         const languageToCountryCode = {
-            en: "gb",  // Inglese -> regno unito
-            ja: "jp",  // Giapponese → Giappone
-            ko: "kr",  // Coreano → Corea del Sud
-            zh: "cn",  // Cinese → Cina
-            ar: "sa",  // Arabo → Arabia Saudita
-            he: "il",  // Ebraico → Israele
-            pt: "br",  // Portoghese → Brasile
-            fa: "ir",  // Farsi (Persiano) → Iran
-            und: "XX", // Non determinato
-            xx: "XX",  // Nessun contenuto linguistico
-            eo: "EO",  // Esperanto
-            ia: "IA"   // Interlingua
+            en: "gb",  
+            ja: "jp",  
+            ko: "kr",  
+            zh: "cn",  
+            ar: "sa", 
+            he: "il",  
+            pt: "br",  
+            fa: "ir",  
+            und: "XX", 
+            xx: "XX",  
+            eo: "EO",  
+            ia: "IA"  
         };
 
         const flagCode = languageToCountryCode[language] || language
@@ -50,14 +51,20 @@ export default function CardItem() {
     }
 
     const handleCredits = (id) => {
-        fetchDataCredits(id);
-    }
+        if (!dataCredits[id]) {
+            fetchDataCredits(id);
+        }
+        setVisibleCredits(prevState => ({
+            ...prevState,
+            [id]: !prevState[id] 
+        }));
+    };
 
     return (
         <>
             {/* map per ogni item genero una card */}
             {data.map((item) => (
-                <div className="col-4" key={item.id} >
+                <div className="col-12 col-sm-6 col-xl-4" key={item.id} >
                     {/* card */}
                     <div className="poster_item"  >
                         <img className="poster_img" src={`https://image.tmdb.org/t/p/w342/${item.poster_path}`} alt="poster_item" />
@@ -65,21 +72,29 @@ export default function CardItem() {
                         {/* info movie or tv series */}
                         <div className="info_item p-4">
                             <div className="info_start">
-                                <h2 className="title">
+                                <h5 className="title">
                                     {item.title || item.name}
-                                </h2>
-                                < button className="btn" onClick={() => handleCredits(item.id)}> Credits </button>
+                                </h5>
 
-                                <div className="mt-4">
-                                    {/* credits section */}
-                                    {dataCredits[item.id] && dataCredits[item.id].length > 0 && (
-                                        dataCredits[item.id]
-                                            .filter((caster) => caster.order < 6)
-                                            .map((caster) => (
-                                                <h6 className="pb-1" key={caster.id}> <span>{caster.name} </span>  ({caster.character})</h6>
-                                            ))
-                                    )}
-                                </div>
+                                <button className="btn_credits" onClick={() => handleCredits(item.id)}>
+                                    {visibleCredits[item.id] ? "Nascondi" : "Mostra i Crediti"}
+                                </button>
+
+                                {visibleCredits[item.id] && dataCredits[item.id] && (
+                                    <div className="mt-4">
+                                        <ul>
+                                            {dataCredits[item.id]
+                                                .filter((caster) => caster.order < 6)
+                                                .map((caster) => (
+                                                    <li key={caster.id}>
+                                                        <h6>
+                                                            <span>{caster.name}</span> ({caster.character})
+                                                        </h6>
+                                                    </li>
+                                                ))}
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="info_end">
