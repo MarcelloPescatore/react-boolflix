@@ -1,21 +1,22 @@
 import React from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GlobalProvider } from "./contexts/GlobalProvider"
-import AppHeader from "./components/AppHeader"
 import SearchResults from "./components/SearchResults"
-import AppFooter from "./components/AppFooter"
+import Layout from "./pages/Layout";
+import HomePage from "./pages/HomePage";
 
 
 function App() {
   return (
     <GlobalProvider >
-      <AppHeader />
-      <main className="flex-grow-1 d-flex">
-        <div className="container my-3">
-          <h1 className="mb-3">Results</h1>
-          <SearchResults />
-        </div>
-      </main>
-      <AppFooter />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/results" element={<SearchResults />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </GlobalProvider>
   )
 }
