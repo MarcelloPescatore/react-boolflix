@@ -16,12 +16,12 @@ export default function NotFound() {
                 </Link>
             </header>
             <main>
-                <div className="container d-flex justify-content-center gap-4 align-items-center">
+                <div className="container d-flex flex-column  flex-lg-row justify-content-center gap-4 align-items-center">
                     <img src={insideOut2} alt="" className="not_found_img"/>
-                    <div className="d-flex flex-column">
-                        <span className="text-light text-center fs-1 fw-bold">È un errore 404.</span>
-                        <span className="text-light text-center fs-5 fw-light">Non ti preoccupare, nessuno conosce il vero significato di "404". <br /> Eeehmmm, cerchiamo.. di non agitarci... Affrontiamo questa situazione con calma. <br />Andrà tutto bene.. Vero?? OK.</span>
-                        <span className="text-light text-center fs-5 fw-light mt-4">Premiamo quel tasto rosso per <Link className="text-light fw-bold" to={"/"}>all'Homepage</Link> che si trova da qualche parte in alto, No? </span>
+                    <div className="d-flex flex-column px-4 px-lg-0">
+                        <span className="text-light text-center fs-sm-1 fs-3 fw-bold">È un errore 404.</span>
+                        <span className="text-light text-center fs-sm-5 fs-6 fw-light">Non ti preoccupare, nessuno conosce il vero significato di "404". <br /> Eeehmmm, cerchiamo.. di non agitarci... Affrontiamo questa situazione con calma. <br />Andrà tutto bene.. Vero?? OK.</span>
+                        <span className="text-light text-center fs-sm-5  fs-6 fw-light mt-3">Premiamo quel tasto rosso per <Link className="text-light fw-bold" to={"/"}>all'Homepage</Link> che si trova da qualche parte in alto, No? </span>
                     </div>
                 </div>
             </main>

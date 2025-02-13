@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
 import CardItem from "./CardItem";
 import AppHeader from "../components/AppHeader";
+import ScrollUp from "../components/ScrollUp";
 
 export default function SearchResults() {
     const { data, isLoading, error, hasReserched, query } = useContext(GlobalContext)
@@ -30,6 +31,7 @@ export default function SearchResults() {
                 ) : (
                     hasReserched && <p className="text-light">No results found.</p>
                 )}
+                <ScrollUp/>
             </main>
         </>
     )

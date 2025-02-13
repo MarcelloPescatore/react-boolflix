@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
 import Jumbotron from "../components/Jumbotron";
 import AppHeaderHomepage from "../components/AppHeaderHomepage";
+import ScrollUp from "../components/ScrollUp";
 
 export default function HomePage() {
     const { categoryData, selectedCategory, setSelectedCategory, isLoading } = useContext(GlobalContext);
@@ -48,6 +49,7 @@ export default function HomePage() {
                         ))}
                     </div>
                 </div>
+                <ScrollUp/>
             </main>
         </>
     )

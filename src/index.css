@@ -236,11 +236,19 @@ main {
     .scroll-up{
         right: 30px;
     }
+
+    
 }
 
-@media screen and (max-width: 765px) {
+@media screen and (max-width: 768px) {
     header {
         padding: 1.5rem 10px !important;
+    }
+
+    main{
+        .not_found_img{
+            height: 45vh;
+        }
     }
 }
 
@@ -281,5 +289,12 @@ main {
             font-size: 18px;
         }
     }
+
+    main{
+        .not_found_img{
+            height: 35vh;
+        }
+    }
+
 
 }
