@@ -7,10 +7,10 @@ export default function Layout() {
     return (
         <>
             
-            <main className="flex-grow-1">
+            <div className="flex-grow-1">
                 <Outlet />
                 <ScrollUp/>
-            </main>
+            </div>
             <AppFooter />
         </>
     )

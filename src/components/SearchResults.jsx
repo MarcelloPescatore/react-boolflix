@@ -15,7 +15,7 @@ export default function SearchResults() {
         <>
             <AppHeader />
 
-            <div className="container mt-4">
+            <main className="container mt-4">
                 <div className="mb-4 d-flex justify-content-between align-items-end">
                     <h2 className="text-light">Ecco i tuoi risultati</h2>
                     <h5 className="text-light fw-light"> <span className="fw-bold">Categoria</span> {query.filter === "movie" ? "(Film)" : "(Serie TV)"}</h5>
@@ -30,7 +30,7 @@ export default function SearchResults() {
                 ) : (
                     hasReserched && <p className="text-light">No results found.</p>
                 )}
-            </div>
+            </main>
         </>
     )
 }

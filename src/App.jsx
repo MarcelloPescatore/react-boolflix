@@ -4,6 +4,7 @@ import { GlobalProvider } from "./contexts/GlobalProvider"
 import SearchResults from "./components/SearchResults"
 import Layout from "./pages/Layout";
 import HomePage from "./pages/HomePage";
+import NotFound from "./pages/NotFound";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/results" element={<SearchResults />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>
